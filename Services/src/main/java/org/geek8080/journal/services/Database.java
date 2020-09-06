@@ -28,7 +28,9 @@ public class Database {
         try{
             LOGGER.info("Database Connection does not exist. Establishing Connection...");
             server = Server.createTcpServer("-tcp", "-tcpAllowOthers", "-ifNotExists").start();
-            connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/./" + DBName + ";CREATE=true;CIPHER=AES","root","1024 1024");
+            connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/./" + DBName + ";autocommit=true;CREATE=true;CIPHER=AES","root","1024 1024");
+            //connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/./" + DBName,"","");
+            connection.setAutoCommit(true);
             statement = connection.createStatement();
             LOGGER.info("Database connection established. " + server.getURL());
         } catch (SQLException ex) {
@@ -189,7 +191,7 @@ public class Database {
                 }
             });
             n = preparedStatement.executeUpdate();
-            LOGGER.info("Successfully executed query: " + query);
+            LOGGER.info(n + " rows affected. Successfully executed query: " + query);
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
         }
@@ -209,7 +211,7 @@ public class Database {
     public static HashSet<String> getAllTables(){
         HashSet<String> tables = new HashSet<>();
         try{
-            ResultSet resultSet = statement.executeQuery("SHOW TABLES FROM diary;");
+            ResultSet resultSet = statement.executeQuery("SHOW TABLES FROM DIARY;");
             while (resultSet.next()){
                 tables.add(resultSet.getString(1));
             }
@@ -224,10 +226,11 @@ public class Database {
             LOGGER.info("Stopping DB Server...");
             connection.close();
             statement.close();
-            server.stop();
-            LOGGER.info("DB Server stopped Successfully.");
         } catch (SQLException ex) {
              LOGGER.error("Encountered an error while closing the server connection with the DB Server.", ex);
+        } finally {
+            server.stop();
+            LOGGER.info("DB Server stopped Successfully.");
         }
     }
 }

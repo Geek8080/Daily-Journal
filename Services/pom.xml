@@ -37,7 +37,6 @@
             <groupId>org.Geek8080</groupId>
             <artifactId>Entities</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
