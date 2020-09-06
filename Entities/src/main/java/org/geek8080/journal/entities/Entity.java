@@ -13,15 +13,15 @@ public abstract class Entity {
      */
     private int ID;
 
-    public static String SQLGenerationQuery;
-
     public Entity(int ID){
         this.ID = ID;
     }
 
     public abstract void createPreparedStatement(PreparedStatement preparedStatement) throws SQLException;
 
-    public abstract String getSQLGenerationQuery();
+    public static String getSQLGenerationQuery() {
+        return null;
+    }
 
     public boolean equals(final Object o) {
         if (o == this) return true;
