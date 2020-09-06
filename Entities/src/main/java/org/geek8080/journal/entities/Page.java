@@ -11,15 +11,6 @@ import java.text.SimpleDateFormat;
 
 public class Page extends Entity{
 
-    static {
-        SQLGenerationQuery = "CREATE TABLE IF NOT EXIST new_table (" +
-                "  ID` INT NOT NULL AUTO_INCREMENT," +
-                "  Creation_Time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-                "  Title VARCHAR(50) NOT NULL," +
-                "  Subtitle VARCHAR(200)," +
-                "  Body LONGTEXT NOT NULL," +
-                "  PRIMARY KEY (ID));";
-    }
 
     private Timestamp creationTime;
 
@@ -53,9 +44,14 @@ public class Page extends Entity{
         preparedStatement.setObject(3, this.body);
     }
 
-    @Override
-    public String getSQLGenerationQuery() {
-        return SQLGenerationQuery;
+    public static String getSQLGenerationQuery() {
+        return "CREATE TABLE IF NOT EXISTS PAGE (" +
+                "  ID INT NOT NULL AUTO_INCREMENT," +
+                "  Creation_Time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
+                "  Title VARCHAR(50) NOT NULL," +
+                "  Subtitle VARCHAR(200)," +
+                "  Body CLOB NOT NULL," +
+                "  PRIMARY KEY (ID));";
     }
 
     public String clobToString(Clob data) {

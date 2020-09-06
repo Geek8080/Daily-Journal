@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="FATAL">
+    <Appenders>
+        <RollingRandomAccessFile name="LogToRollingRandomAccessFile" append="true" fileName="logs/database.log"
+                                 filePattern="logs/$${date:yyyy-MM}/database-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>[%-5p] [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}:%L] - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingRandomAccessFile>
+        <Async name="async" includeLocation="true">
+            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="LogToRollingRandomAccessFile"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <!-- avoid duplicated logs with additivity=false -->
+        <Logger name="org.geek8080.journal.services" level="info" additivity="false">
+            <AppenderRef ref="async"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="async"/>
+        </Root>
+    </Loggers>
+</Configuration>
