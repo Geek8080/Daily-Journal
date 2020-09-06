@@ -22,7 +22,7 @@ public class Page extends Entity{
 
     private String creationTimeString;
 
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd MMMM, yyyy[hh:mm aa]");
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd MMMM, yyyy [hh:mm aa]");
 
     public Page(int ID, Timestamp creationTime, String title, String subTitle, Clob body) {
         super(ID);
