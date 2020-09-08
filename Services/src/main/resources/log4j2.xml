@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="FATAL">
     <Appenders>
-        <RollingRandomAccessFile name="LogToRollingRandomAccessFile" append="true" fileName="logs/database.log"
+        <RollingRandomAccessFile name="DBLog" append="true" fileName="logs/services.log"
                                  filePattern="logs/$${date:yyyy-MM}/database-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>[%-5p] [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}:%L] - %m%n</Pattern>
@@ -13,8 +13,7 @@
             <DefaultRolloverStrategy max="10"/>
         </RollingRandomAccessFile>
         <Async name="async" includeLocation="true">
-            <AppenderRef ref="LogToFile"/>
-            <AppenderRef ref="LogToRollingRandomAccessFile"/>
+            <AppenderRef ref="DBLog"/>
         </Async>
     </Appenders>
     <Loggers>
