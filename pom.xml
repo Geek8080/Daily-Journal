@@ -12,6 +12,7 @@
     <modules>
         <module>Entities</module>
         <module>Services</module>
+        <module>Utils</module>
     </modules>
 
     <properties>
