@@ -10,6 +10,9 @@ module Services {
     requires java.scripting;
     requires java.desktop;
     requires Entities;
+    requires Utils;
+    requires java.mail;
+    requires activation;
 
     exports org.geek8080.journal.services;
 }
