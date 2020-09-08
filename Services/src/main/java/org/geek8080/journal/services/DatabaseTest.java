@@ -80,6 +80,7 @@ public class DatabaseTest {
 		try {
 			Diary diary = new Diary(rs);
 			PDFReport.generatePDF("", "File", diary);
+			ExcelReport.generateExcelReport("", "File", diary);
 			System.out.println(diary.toString());
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
