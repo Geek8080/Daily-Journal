@@ -3,13 +3,14 @@ package org.geek8080.journal.entities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.CharBuffer;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-public class Page extends Entity{
+public class Page extends Entity {
 
 
     private Timestamp creationTime;
@@ -30,6 +31,15 @@ public class Page extends Entity{
         this.title = title;
         this.subTitle = subTitle;
         this.body = new StringBuffer(clobToString(body));
+        this.creationTimeString = SIMPLE_DATE_FORMAT.format(creationTime);
+    }
+
+    public Page(int ID, Timestamp creationTime, String title, String subTitle, String body) {
+        super(ID);
+        this.creationTime = creationTime;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.body = new StringBuffer(body);
         this.creationTimeString = SIMPLE_DATE_FORMAT.format(creationTime);
     }
 
@@ -54,22 +64,36 @@ public class Page extends Entity{
                 "  PRIMARY KEY (ID));";
     }
 
-    public String clobToString(Clob data) {
-        StringBuilder sb = new StringBuilder();
+    public String clobToString(Clob data){
         try {
-            Reader reader = data.getCharacterStream();
-            BufferedReader br = new BufferedReader(reader);
-
-            String line;
-            while(null != (line = br.readLine())) {
-                sb.append(line);
-            }
-            br.close();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            Reader r = data.getCharacterStream();
+            CharBuffer cb = CharBuffer.allocate((int)data.length());
+            while (r.read(cb)!=1)
+                ;
+            return cb.toString();
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
         }
-        return sb.toString();
+
+        return "ERROR WHILE CONVERTING(CLOB -> String)";
     }
+
+    //public String clobToString(Clob data) {
+    //    StringBuilder sb = new StringBuilder();
+    //    try {
+    //        Reader reader = data.getCharacterStream();
+    //        BufferedReader br = new BufferedReader(reader);
+//
+    //        String line;
+    //        while(null != (line = br.readLine())) {
+    //            sb.append(line);
+    //        }
+    //        br.close();
+    //    } catch (SQLException | IOException e) {
+    //        e.printStackTrace();
+    //    }
+    //    return sb.toString();
+    //}
 
     public Timestamp getCreationTime() {
         return this.creationTime;
