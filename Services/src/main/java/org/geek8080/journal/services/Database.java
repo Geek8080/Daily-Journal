@@ -21,7 +21,7 @@ public class Database {
     private static HashSet<String> tables;
     private static HashMap<String, PreparedStatement> preparedStatements;
 
-    private Database(String DBNameString){
+    private Database(String DBNameString) throws RuntimeException{
         DBName = DBNameString;
         preparedStatements = new HashMap<>();
 
@@ -35,10 +35,11 @@ public class Database {
             LOGGER.info("Database connection established. " + server.getURL());
         } catch (SQLException ex) {
             LOGGER.fatal("Couldn't start H2 DB server.", ex);
+            throw new RuntimeException("Couldn't start H2 DB server.", ex);
         }
     }
 
-    public static Database getInstance(String DBNameString, HashMap<String, String> tableQueryList){
+    public static Database getInstance(String DBNameString, HashMap<String, String> tableQueryList) throws RuntimeException{
         if(instance == null){
             instance = new Database(DBNameString);
 
@@ -51,6 +52,7 @@ public class Database {
                         LOGGER.info("Successfully created " + tableName + ".");
                     } catch (SQLException ex) {
                         LOGGER.fatal("Encounterd an error while creating " + tableName + ". Query:\n" + tableGenerationQuery, ex);
+                        throw new RuntimeException("Encounterd an error while creating " + tableName + ". Query:\n" + tableGenerationQuery, ex);
                     }
                 }
             });
@@ -64,15 +66,15 @@ public class Database {
      * @param query any SQL statement
      * @return true if the first result is a ResultSet object; false if it is an update count or there are no results
      */
-    public boolean execute(String query){
+    public boolean execute(String query) throws RuntimeException {
         try{
             boolean b = statement.execute(query);
             LOGGER.info("Successfully executed query: " + query);
             return b;
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
+            throw new RuntimeException("Encountered an error while executing: " + query, ex);
         }
-        return false;
     }
 
     /**
@@ -81,7 +83,7 @@ public class Database {
      * @param query any SQL statement
      * @return true if the first result is a ResultSet object; false if it is an update count or there are no results
      */
-    public boolean execute(String query, HashMap<Integer, Object> valuePair){
+    public boolean execute(String query, HashMap<Integer, Object> valuePair) throws RuntimeException {
         try{
             PreparedStatement preparedStatement;
             if (preparedStatements.containsKey(query)){
@@ -95,6 +97,7 @@ public class Database {
                     preparedStatement.setObject(k, v);
                 } catch (SQLException ex) {
                     LOGGER.error("Encountered an exception while setting parameters.", ex);
+                    throw new RuntimeException("Encountered an exception while setting parameters.", ex);
                 }
             });
             boolean b = preparedStatement.execute();
@@ -102,8 +105,8 @@ public class Database {
             return b;
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
+            throw new RuntimeException("Encountered an error while executing: " + query, ex);
         }
-        return false;
     }
 
     /**
@@ -111,13 +114,14 @@ public class Database {
      * @param query query an SQL statement to be sent to the database, typically a static SQL SELECT statement
      * @return a ResultSet object that contains the data produced by the given query; never null
      */
-    public ResultSet executeQuery(String query){
+    public ResultSet executeQuery(String query) throws RuntimeException {
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(query);
             LOGGER.info("Successfully executed query: " + query);
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
+            throw new RuntimeException("Encountered an error while executing: " + query, ex);
         }
         return rs;
     }
@@ -127,7 +131,7 @@ public class Database {
      * @param query query an SQL statement to be sent to the database, typically a static SQL SELECT statement
      * @return a ResultSet object that contains the data produced by the given query; never null
      */
-    public ResultSet executeQuery(String query, HashMap<Integer, Object> valuePair){
+    public ResultSet executeQuery(String query, HashMap<Integer, Object> valuePair) throws RuntimeException {
         ResultSet rs = null;
         try {
             PreparedStatement preparedStatement;
@@ -142,12 +146,14 @@ public class Database {
                     preparedStatement.setObject(k, v);
                 } catch (SQLException ex) {
                     LOGGER.error("Encountered an exception while setting parameters.", ex);
+                    throw new RuntimeException("Encountered an exception while setting parameters.", ex);
                 }
             });
             rs = preparedStatement.executeQuery();
             LOGGER.info("Successfully executed query: " + query);
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
+            throw new RuntimeException("Encountered an error while executing: " + query, ex);
         }
         return rs;
     }
@@ -157,13 +163,14 @@ public class Database {
      * @param query query n SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL statement that returns nothing, such as a DDL statement.
      * @return either (1) the row count for SQL Data Manipulation Language (DML) statements or (2) 0 for SQL statements that return nothing
      */
-    public int executeUpdate(String query){
+    public int executeUpdate(String query) throws RuntimeException {
         int n = 0;
         try {
             n = statement.executeUpdate(query);
             LOGGER.info("Successfully executed query: " + query);
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
+            throw new RuntimeException("Encountered an error while executing: " + query, ex);
         }
         return n;
     }
@@ -173,7 +180,7 @@ public class Database {
      * @param query query n SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL statement that returns nothing, such as a DDL statement.
      * @return either (1) the row count for SQL Data Manipulation Language (DML) statements or (2) 0 for SQL statements that return nothing
      */
-    public int executeUpdate(String query, HashMap<Integer, Object> valuePair){
+    public int executeUpdate(String query, HashMap<Integer, Object> valuePair) throws RuntimeException {
         int n = 0;
         try {
             PreparedStatement preparedStatement;
@@ -188,27 +195,30 @@ public class Database {
                     preparedStatement.setObject(k, v);
                 } catch (SQLException ex) {
                     LOGGER.error("Encountered an exception while setting parameters.", ex);
+                    throw new RuntimeException("Encountered an exception while setting parameters.", ex);
                 }
             });
             n = preparedStatement.executeUpdate();
             LOGGER.info(n + " rows affected. Successfully executed query: " + query);
         } catch (SQLException ex) {
             LOGGER.error("Encountered an error while executing: " + query, ex);
+            throw new RuntimeException("Encountered an error while executing: " + query, ex);
         }
         return n;
     }
 
-    public void executePreparedStatement(String query, Entity entity){
+    public void executePreparedStatement(String query, Entity entity) throws RuntimeException {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             entity.createPreparedStatement(preparedStatement);
             preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ex) {
+            LOGGER.error("Encountered an error while preparing statement using entity: " + query, ex);
+            throw new RuntimeException("Encountered an error while preparing statement using entity: " + query, ex);
         }
     }
 
-    public static HashSet<String> getAllTables(){
+    public static HashSet<String> getAllTables() throws RuntimeException {
         HashSet<String> tables = new HashSet<>();
         try{
             ResultSet resultSet = statement.executeQuery("SHOW TABLES FROM DIARY;");
@@ -217,17 +227,19 @@ public class Database {
             }
         } catch (SQLException ex) {
             LOGGER.fatal("Encountered and error while retrieving the tables.", ex);
+            throw new RuntimeException("Encountered and error while retrieving the tables.", ex);
         }
         return tables;
     }
 
-    public void close(){
+    public void close() throws RuntimeException {
         try{
             LOGGER.info("Stopping DB Server...");
             connection.close();
             statement.close();
         } catch (SQLException ex) {
              LOGGER.error("Encountered an error while closing the server connection with the DB Server.", ex);
+            throw new RuntimeException("Encountered an error while closing the server connection with the DB Server.", ex);
         } finally {
             server.stop();
             LOGGER.info("DB Server stopped Successfully.");
