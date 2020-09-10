@@ -1,5 +1,7 @@
 package org.geek8080.journal.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ExcelReport {
+
+	private static final Logger LOGGER = LogManager.getLogger(ExcelReport.class);
 
 	private static String columns[] = {"S.No.", "Creation Time", "Title", "Subtitle", "Body"};
 
@@ -74,9 +78,9 @@ public class ExcelReport {
 			fileOut.close();
 			workbook.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.fatal("Error while writing Excel Report file.", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.fatal("Error while writing Excel Report file.", e);
 		}
 
 	}

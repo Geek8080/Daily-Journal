@@ -1,5 +1,7 @@
 package org.geek8080.journal.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -16,8 +18,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PDFReport {
-	public static void generatePDF(String location, String fileName, Diary diary){
+
+	private static final Logger LOGGER = LogManager.getLogger(PDFReport.class);
+
+	public static void generatePDF(String location, String fileName, Diary diary) throws RuntimeException {
 		HashMap<Integer, Page> pages = diary.getPages();
+
+		LOGGER.info("Generating Document[PDF Report].");
 
 		try(PDDocument document = new PDDocument()){
 			pages.forEach((pageID, diaryPage) -> {
@@ -46,8 +53,9 @@ public class PDFReport {
 					titleContentStream.setNonStrokingColor(Color.BLACK);
 					titleContentStream.showText(title);
 					titleContentStream.endText();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LOGGER.error("Encountered an error while writing title to PDF." + title, ex);
+					throw new RuntimeException("Encountered an error while writing title to PDF." + title, ex);
 				}
 
 
@@ -71,8 +79,9 @@ public class PDFReport {
 					}
 					subtitleContentStream.showText(time);
 					subtitleContentStream.endText();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LOGGER.error("Encountered an error while writing subtitle/time to PDF." + title, ex);
+					throw new RuntimeException("Encountered an error while writing subtitle/time to PDF." + title, ex);
 				}
 
 				// Writing the Body
@@ -100,16 +109,18 @@ public class PDFReport {
 						py -= leading;
 					}
 					bodyContentStream.endText();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LOGGER.error("Encountered an error while writing body to PDF." + title, ex);
+					throw new RuntimeException("Encountered an error while writing body to PDF." + title, ex);
 				}
 
 
 				document.addPage(page);
 			});
 			document.save(location + fileName + ".pdf");
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			LOGGER.error("Encountered an error while writing to PDF.", ex);
+			throw new RuntimeException("Encountered an error while writing to PDF.", ex);
 		}
 	}
 
@@ -141,8 +152,9 @@ public class PDFReport {
 					titleContentStream.setNonStrokingColor(Color.BLACK);
 					titleContentStream.showText(title);
 					titleContentStream.endText();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LOGGER.error("Encountered an error while writing title to PDF." + title, ex);
+					throw new RuntimeException("Encountered an error while writing title to PDF." + title, ex);
 				}
 
 
@@ -166,8 +178,9 @@ public class PDFReport {
 					}
 					subtitleContentStream.showText(time);
 					subtitleContentStream.endText();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LOGGER.error("Encountered an error while writing subtitle/time to PDF." + title, ex);
+					throw new RuntimeException("Encountered an error while writing subtitle/time to PDF." + title, ex);
 				}
 
 				// Writing the Body
@@ -195,21 +208,25 @@ public class PDFReport {
 						py -= leading;
 					}
 					bodyContentStream.endText();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LOGGER.error("Encountered an error while writing body to PDF." + title, ex);
+					throw new RuntimeException("Encountered an error while writing body to PDF." + title, ex);
 				}
 
 
 				document.addPage(page);
 				document.save(location + fileName + ".pdf");
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			LOGGER.error("Encountered an error while writing to PDF.", ex);
+			throw new RuntimeException("Encountered an error while writing to PDF.", ex);
 		}
 	}
 
-	private static List<String> breakLongString(String text, float fontSize, PDFont pdfFont, float width) throws IOException {
+	private static List<String> breakLongString(String text, float fontSize, PDFont pdfFont, float width) throws RuntimeException {
 		List<String> lines = new ArrayList<>();
+		LOGGER.info("Generating list from the String to fit the line.");
 		if (text == null || text.equals("")){
+			LOGGER.info("Nothing in the text passed... Returning empty list of String.");
 			lines.add("");
 			return lines;
 		}
@@ -220,10 +237,15 @@ public class PDFReport {
 			if (spaceIndex < 0)
 				spaceIndex = text.length();
 			String subString = text.substring(0, spaceIndex);
-			float size = fontSize * pdfFont.getStringWidth(subString) / 1000;
+			float size = 0;
+			try {
+				size = fontSize * pdfFont.getStringWidth(subString) / 1000;
+			} catch (IOException ex) {
+				LOGGER.error("Couldn't get size of the String width.", ex);
+				throw new RuntimeException("Couldn't get size of the String width.", ex);
+			}
 			//System.out.printf("'%s' - %f of %f\n", subString, size, width);
-			if (size > width)
-			{
+			if (size > width) {
 				if (lastSpace < 0)
 					lastSpace = spaceIndex;
 				subString = text.substring(0, lastSpace);
@@ -232,17 +254,17 @@ public class PDFReport {
 				//System.out.printf("'%s' is line\n", subString);
 				lastSpace = -1;
 			}
-			else if (spaceIndex == text.length())
-			{
+			else if (spaceIndex == text.length()) {
 				lines.add(text);
 				//System.out.printf("'%s' is line\n", text);
 				text = "";
 			}
-			else
-			{
+			else {
 				lastSpace = spaceIndex;
 			}
 		}
+
+		LOGGER.info("Successfully broken lines into parts.");
 		return lines;
 	}
 }
