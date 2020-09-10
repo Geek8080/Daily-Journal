@@ -13,6 +13,7 @@
         <module>Entities</module>
         <module>Services</module>
         <module>Utils</module>
+        <module>Diary</module>
     </modules>
 
     <properties>
