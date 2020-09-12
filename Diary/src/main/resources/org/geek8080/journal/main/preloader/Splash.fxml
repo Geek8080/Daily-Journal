@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,6 +23,5 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <JFXListView layoutX="333.0" layoutY="157.0" prefHeight="238.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

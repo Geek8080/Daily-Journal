@@ -1,25 +1,42 @@
 package org.geek8080.journal.main.account;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.geek8080.journal.main.App;
 import org.geek8080.journal.services.Authenticator;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OTPController {
 
+	public static Stage pstage;
 	Pattern pattern;
 	Matcher matcher;
 
-	private static final String EMAIL_PATTERN =
+	public static final String EMAIL_PATTERN =
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	@FXML
+	private StackPane rootStack;
 
 	@FXML
 	public JFXTextField emailTextField;
@@ -38,32 +55,81 @@ public class OTPController {
 		String emailId = emailTextField.getText().trim();
 		matcher = pattern.matcher(emailId);
 		if (matcher.matches()){
-			try{
-				App.AUTH.generateOTP(emailId);
-				App.mailSent = true;
-				otpTextField.setDisable(false);
-				verifyButton.setDisable(false);
-			}catch (RuntimeException ex){
-				nointernetLabel.setText("*No Internet Connection. Exiting App...");
-				nointernetLabel.setVisible(true);
-				App.noInternet = true;
-			}
+			nointernetLabel.setVisible(false);
+			BorderPane pane = new BorderPane();
+			pane.setPrefHeight(rootStack.getPrefHeight());
+			pane.setPrefWidth(rootStack.getPrefWidth());
+			pane.setStyle("-fx-background-color: white");
+
+			JFXSpinner spinner = new JFXSpinner();
+			spinner.setStyle("-fx-background-color: white");
+			Text text = new Text("Sending mail");
+			text.setFont(Font.font("Times New Roman", 24));
+			VBox box = new VBox();
+			box.getChildren().add(spinner);
+			box.getChildren().add(text);
+			box.setAlignment(Pos.CENTER);
+			box.setPrefHeight(rootStack.getPrefHeight());
+			box.setPrefWidth(rootStack.getPrefWidth());
+			box.setSpacing(30);
+			text.setWrappingWidth(300);
+			text.setTextAlignment(TextAlignment.CENTER);
+			pane.setCenter(box);
+
+			JFXDialog jfxDialog = new JFXDialog(rootStack, pane, JFXDialog.DialogTransition.CENTER);
+			jfxDialog.setPrefHeight(rootStack.getPrefHeight());
+			jfxDialog.setPrefWidth(rootStack.getPrefWidth());
+			rootStack.setDisable(true);
+			jfxDialog.show();
+			//prashantprakash97@gmail.com
+			new Thread( () -> {
+				try{
+					emailTextField.setDisable(true);
+					App.AUTH.generateOTP(emailId);
+					otpTextField.setDisable(false);
+					verifyButton.setDisable(false);
+					emailTextField.setDisable(false);
+				}catch (RuntimeException ex){
+					nointernetLabel.setText("*No Internet Connection. Exiting App...");
+					nointernetLabel.setVisible(true);
+				}finally {
+					rootStack.setDisable(false);
+					jfxDialog.close();
+				}
+			}).start();
 		}else {
 			nointernetLabel.setText("Invalid E-Mail ID");
 			nointernetLabel.setVisible(true);
-			emailTextField.setStyle("-fx-background-color: red");
+			emailTextField.setStyle("-fx-border-color: red");
 		}
 	}
 
 	@FXML
-	public void verify(MouseEvent event) {
-		if(App.AUTH.authenticateOTP(otpTextField.getText())){
+	public void verify(MouseEvent event) throws IOException {
+		if(App.AUTH.authenticateOTP(otpTextField.getText().trim())){
 			App.verifiedOTP = true;
+			launchSignUp();
 		}else{
 			nointernetLabel.setText("Invalid OTP");
 			nointernetLabel.setVisible(true);
-			otpTextField.setStyle("-fx-background-color: red");
+			otpTextField.setStyle("-fx-border-color: red");
 		}
+	}
+
+	@FXML
+	public void launchSignUp() throws IOException {
+
+		Stage stage = new Stage();
+		Parent root = FXMLLoader.load(App.class.getResource("account/Signup.fxml"));
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.setOnCloseRequest(e -> {
+			System.exit(0);
+		});
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.show();
+		SignupController.pstage = stage;
+		pstage.hide();
 	}
 
 	public void initialize(){
