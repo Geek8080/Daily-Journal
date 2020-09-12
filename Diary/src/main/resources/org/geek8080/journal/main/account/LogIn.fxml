@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.geek8080.journal.main.account.LogInController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="283.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.geek8080.journal.main.account.LogInController">
+   <children>
+      <HBox alignment="BOTTOM_CENTER" layoutX="47.0" layoutY="79.0" spacing="10.0" />
+      <HBox alignment="BOTTOM_CENTER" layoutX="77.0" layoutY="136.0" spacing="10.0" />
+      <HBox layoutX="85.0" layoutY="134.0" spacing="50.0" />
+      <JFXTextField layoutX="122.0" layoutY="109.0" prefHeight="26.0" prefWidth="313.0" />
+   </children>
 </AnchorPane>
