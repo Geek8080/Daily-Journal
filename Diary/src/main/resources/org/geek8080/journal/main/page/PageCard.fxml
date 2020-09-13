@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<fx:root fx:id="cardStack" type="StackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="card" prefHeight="191.0" prefWidth="637.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Text fx:id="titleText" fill="#2b435c" layoutX="13.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I consider Assignments, Discussions and peer revie">
+               <font>
+                  <Font name="Times New Roman" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="subtitleText" fill="#828fa7" layoutX="13.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can disable a JavaFX Button via its setDisable() method. The setDisable() method takes a boolean" wrappingWidth="551.3489990234375">
+               <font>
+                  <Font name="Arial Italic" size="17.0" />
+               </font>
+            </Text>
+            <Text fx:id="dateText" fill="#828fa7" layoutX="13.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="17 July, 2020 [02:00 AM]" wrappingWidth="551.3489990234375">
+               <font>
+                  <Font name="Arial Italic" size="17.0" />
+               </font>
+            </Text>
+            <Text fx:id="contentText" layoutX="19.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here will be quick preview to the content of the page content followed by..." wrappingWidth="596.9490966796876">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </Text>
+            <VBox alignment="TOP_RIGHT" layoutX="494.0" layoutY="19.0" spacing="20.0">
+               <children>
+                  <HBox spacing="20.0">
+                     <children>
+                        <JFXButton fx:id="viewButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#view" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="View" textFill="#ddd1e3">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="printButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#print" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="Print" textFill="#ddd1e3">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <JFXButton fx:id="deleteButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#delete" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="Delete" textFill="#ddd1e3">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>
