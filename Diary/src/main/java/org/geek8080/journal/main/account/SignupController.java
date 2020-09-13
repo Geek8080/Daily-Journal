@@ -32,20 +32,23 @@ public class SignupController {
 	@FXML
 	void signup(MouseEvent event) throws InterruptedException {
 		JFXDialog jfxDialog = new JFXDialog(rootStack, new JFXSpinner(), JFXDialog.DialogTransition.CENTER);
-		jfxDialog.setStyle("-fx-background-color: TRANSPARENT;");
+		rootStack.setDisable(true);
 		jfxDialog.show();
 		new Thread(() -> {
 			String userName = userNameTextField.getText().trim();
 			String password = passwordField.getText().trim();
 			App.USER = new User(userName, password);
 			App.AUTH.saveUser(userName, password);
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			rootStack.setDisable(false);
 			jfxDialog.close();
-		});
+			launchMain();
+			pstage.hide();
+		}).start();
+	}
+
+	@FXML
+	private void launchMain() {
+
 	}
 
 }

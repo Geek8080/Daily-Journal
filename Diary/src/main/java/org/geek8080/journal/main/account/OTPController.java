@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -39,6 +40,9 @@ public class OTPController {
 	private StackPane rootStack;
 
 	@FXML
+	private AnchorPane rootPane;
+
+	@FXML
 	public JFXTextField emailTextField;
 
 	@FXML
@@ -56,13 +60,8 @@ public class OTPController {
 		matcher = pattern.matcher(emailId);
 		if (matcher.matches()){
 			nointernetLabel.setVisible(false);
-			BorderPane pane = new BorderPane();
-			pane.setPrefHeight(rootStack.getPrefHeight());
-			pane.setPrefWidth(rootStack.getPrefWidth());
-			pane.setStyle("-fx-background-color: white");
 
 			JFXSpinner spinner = new JFXSpinner();
-			spinner.setStyle("-fx-background-color: white");
 			Text text = new Text("Sending mail");
 			text.setFont(Font.font("Times New Roman", 24));
 			VBox box = new VBox();
@@ -74,11 +73,11 @@ public class OTPController {
 			box.setSpacing(30);
 			text.setWrappingWidth(300);
 			text.setTextAlignment(TextAlignment.CENTER);
-			pane.setCenter(box);
 
-			JFXDialog jfxDialog = new JFXDialog(rootStack, pane, JFXDialog.DialogTransition.CENTER);
+			JFXDialog jfxDialog = new JFXDialog(rootStack, box, JFXDialog.DialogTransition.CENTER);
 			jfxDialog.setPrefHeight(rootStack.getPrefHeight());
 			jfxDialog.setPrefWidth(rootStack.getPrefWidth());
+			jfxDialog.setStyle("-fx-background-color: transparent");
 			rootStack.setDisable(true);
 			jfxDialog.show();
 			//prashantprakash97@gmail.com
@@ -136,4 +135,7 @@ public class OTPController {
 		pattern = Pattern.compile(EMAIL_PATTERN);
 	}
 
+	public StackPane getRootStack() {
+		return rootStack;
+	}
 }
