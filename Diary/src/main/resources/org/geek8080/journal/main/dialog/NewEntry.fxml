@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<fx:root prefHeight="485.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="#2f5477" layoutX="235.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Page">
+         <font>
+            <Font name="Times New Roman" size="32.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" layoutX="35.0" layoutY="76.0" spacing="20.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="437.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <JFXTextField fx:id="titleField" prefHeight="26.0" prefWidth="420.0">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </JFXTextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="532.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Subtitle:">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <JFXTextField fx:id="subtitleField" prefHeight="26.0" prefWidth="452.0">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </JFXTextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="218.0" prefWidth="532.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <JFXTextArea fx:id="bodyField" labelFloat="true" prefHeight="218.0" prefWidth="546.0" promptText="Body" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextArea>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox layoutX="331.0" layoutY="415.0" spacing="60.0">
+         <children>
+            <JFXButton fx:id="cancelButton" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" prefHeight="38.0" prefWidth="88.0" style="-fx-background-color: #ef2929;" text="Cancel" textFill="#e5d7d7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="saveButton" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" prefHeight="37.0" prefWidth="88.0" style="-fx-background-color: #6da426;" text="Save" textFill="#d6edb9">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</fx:root>
