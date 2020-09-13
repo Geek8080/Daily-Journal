@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<fx:root fx:id="rootStack" stylesheets="@scroll.css" type="StackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.geek8080.journal.main.MainController">
+   <children>
+      <AnchorPane prefHeight="594.0" prefWidth="717.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <HBox alignment="CENTER" layoutX="162.0" layoutY="23.0" spacing="30.0">
+               <children>
+                  <ImageView fitHeight="74.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@personal.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#2c5867" strokeType="OUTSIDE" strokeWidth="0.0" text="Journal Diary ">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox layoutX="63.0" layoutY="535.0" spacing="50.0">
+               <children>
+                  <JFXButton fx:id="newButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#newPage" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="New Entry" textFill="#ddd1e3">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="printButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#printPDF" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="Print Diary" textFill="#ddd1e3">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="reportButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#generateReport" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="Generate Excel Report" textFill="#ddd1e3">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="refreshButton" alignment="CENTER" buttonType="RAISED" focusTraversable="false" onMouseClicked="#refresh" ripplerFill="#e3d0f0" style="-fx-background-color: #964eb5;" text="Refresh" textFill="#ddd1e3">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <ScrollPane hbarPolicy="NEVER" layoutX="24.0" layoutY="110.0" prefHeight="409.0" prefWidth="670.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
+               <content>
+                  <VBox fx:id="pageBox" prefHeight="409.0" prefWidth="670.0" spacing="40.0" style="-fx-background-color: #FFFFFF;" />
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>
