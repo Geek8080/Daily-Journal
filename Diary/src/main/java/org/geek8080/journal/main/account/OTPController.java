@@ -76,7 +76,7 @@ public class OTPController {
 			jfxDialog.setPrefHeight(rootStack.getPrefHeight());
 			jfxDialog.setPrefWidth(rootStack.getPrefWidth());
 			jfxDialog.setStyle("-fx-background-color: transparent");
-			rootStack.setDisable(true);
+			rootStack.setMouseTransparent(true);
 			jfxDialog.show();
 			//prashantprakash97@gmail.com
 			new Thread( () -> {
@@ -90,7 +90,7 @@ public class OTPController {
 					nointernetLabel.setText("*No Internet Connection. Exiting App...");
 					nointernetLabel.setVisible(true);
 				}finally {
-					rootStack.setDisable(false);
+					rootStack.setMouseTransparent(false);
 					jfxDialog.close();
 				}
 			}).start();
