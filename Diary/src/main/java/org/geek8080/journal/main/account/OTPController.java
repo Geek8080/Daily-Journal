@@ -4,7 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
-import javafx.application.Platform;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -12,15 +12,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import org.geek8080.journal.main.App;
-import org.geek8080.journal.services.Authenticator;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -106,7 +104,6 @@ public class OTPController {
 	@FXML
 	public void verify(MouseEvent event) throws IOException {
 		if(App.AUTH.authenticateOTP(otpTextField.getText().trim())){
-			App.verifiedOTP = true;
 			launchSignUp();
 		}else{
 			nointernetLabel.setText("Invalid OTP");
@@ -117,25 +114,26 @@ public class OTPController {
 
 	@FXML
 	public void launchSignUp() throws IOException {
-
 		Stage stage = new Stage();
+
 		Parent root = FXMLLoader.load(App.class.getResource("account/Signup.fxml"));
 		Scene scene = new Scene(root);
+
 		stage.setScene(scene);
+		stage.setTitle("Signup");
+		stage.initStyle(StageStyle.UNDECORATED);
+
+		SignupController.pstage = stage;
+		stage.show();
+		pstage.hide();
+
 		stage.setOnCloseRequest(e -> {
 			System.exit(0);
 		});
-		stage.initStyle(StageStyle.UNDECORATED);
-		stage.show();
-		SignupController.pstage = stage;
-		pstage.hide();
 	}
 
 	public void initialize(){
 		pattern = Pattern.compile(EMAIL_PATTERN);
 	}
 
-	public StackPane getRootStack() {
-		return rootStack;
-	}
 }
