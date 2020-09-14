@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PageCardController extends StackPane{
+public class PageCardController extends AnchorPane{
 
 	public static StackPane parent;
 	public Page page;
