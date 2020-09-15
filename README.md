@@ -17,3 +17,4 @@ The app uses Java 11 with openJFX 14 for material design. The app follows the JP
 3. Apache POI
 4. Java Mail API
 5. Jasypt
+6. JFoenix
