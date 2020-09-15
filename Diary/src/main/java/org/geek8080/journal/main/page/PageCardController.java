@@ -2,6 +2,7 @@ package org.geek8080.journal.main.page;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
 
@@ -14,15 +15,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.DirectoryChooser;
 
 import org.geek8080.journal.entities.Page;
 import org.geek8080.journal.main.App;
+import org.geek8080.journal.main.Main;
+import org.geek8080.journal.services.ExcelReport;
 import org.geek8080.journal.services.PDFReport;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PageCardController extends AnchorPane{
@@ -77,15 +83,16 @@ public class PageCardController extends AnchorPane{
 	}
 
 	@FXML
-	void delete(MouseEvent event) {
-		App.DB.executeQuery("DELETE FROM PAGE WHERE ID=" + page.getID() + ";");
+	void delete(MouseEvent event) throws SQLException {
+		App.DB.executeUpdate("DELETE FROM PAGE WHERE ID=" + page.getID() + ";");
+		Main.mainWindow.refreshVBox();
 		// reload main
 	}
 
 	@FXML
 	void print(MouseEvent event) {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File directory = directoryChooser.showDialog(null);
+		File location = directoryChooser.showDialog(null);
 
 		Text fileNameText = new Text("Enter File name: ");
 		fileNameText.setFont(Font.font(16));
@@ -113,22 +120,49 @@ public class PageCardController extends AnchorPane{
 		vBox.setAlignment(Pos.CENTER);
 
 		JFXDialog dialog = new JFXDialog(parent, vBox, JFXDialog.DialogTransition.TOP);
-		parent.setDisable(true);
 		dialog.show();
 
 		dialog.setOnDialogClosed((e) -> {
-			parent.setDisable(false);
+			return;
 		});
 
 		AtomicReference<String> fileName = new AtomicReference<>("file");
 
 		button.setOnMouseClicked(e -> {
 			fileName.set(fileNameField.getText());
+
+			StackPane pane = new StackPane();
+			VBox vBoxSpinner = new VBox();
+			Text spinnerText = new Text("Printing...");
+			spinnerText.setWrappingWidth(300);
+			spinnerText.setTextAlignment(TextAlignment.CENTER);
+			spinnerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 24));
+			vBox.setPrefHeight(200);
+			vBox.setPrefWidth(300);
+			vBox.setSpacing(30);
+			vBox.getChildren().add(new JFXSpinner());
+			vBox.getChildren().add(spinnerText);
+			pane.getChildren().add(vBox);
+			pane.setPrefWidth(300);
+			pane.setPrefHeight(250);
+			JFXDialog jfxDialog = new JFXDialog(parent, pane, JFXDialog.DialogTransition.CENTER);
+			parent.setMouseTransparent(true);
+			jfxDialog.show();
+
+			PDFReport.generatePDF(location.getAbsoluteFile().getAbsolutePath() + "\\", fileName.get(), App.DIARY);
+
+			parent.setMouseTransparent(false);
+			jfxDialog.close();
 			dialog.close();
+
+			pane.getChildren().remove(vBox);
+			spinnerText.setText("PDF Report Generated Successfully");
+			pane.getChildren().add(spinnerText);
+			pane.setPrefWidth(400);
+			jfxDialog = new JFXDialog(parent, pane, JFXDialog.DialogTransition.TOP);
+			jfxDialog.show();
+
 		});
-
-		PDFReport.generatePDF(directory.getAbsoluteFile().getAbsolutePath() + "\\", fileName.get(), page);
-
 	}
 
 	@FXML
