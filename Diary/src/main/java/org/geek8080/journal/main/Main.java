@@ -10,8 +10,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class Main {
+
+	public static MainController mainWindow;
+
 	public static void start(Stage stage) throws Exception {
-		MainController mainWindow = new MainController();
+		mainWindow = new MainController();
 		mainWindow.setMaxHeight(mainWindow.getPrefHeight());
 		mainWindow.setMaxWidth(mainWindow.getPrefWidth());
 		mainWindow.setStyle("-fx-background-color: antiquewhite");

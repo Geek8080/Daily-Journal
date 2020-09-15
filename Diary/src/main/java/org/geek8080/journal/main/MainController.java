@@ -163,7 +163,6 @@ public class MainController extends StackPane {
 			String subTitle = dialogPane.subtitleField.getText().trim();
 			String body = dialogPane.bodyField.getText().trim();
 			if( (title == null || title.equalsIgnoreCase("")) || (body == null || body.equalsIgnoreCase(""))){
-				System.out.println("Empty");
 				Pane p = new Pane();
 				p.setPrefWidth(500);
 				p.prefHeight(200);
@@ -201,7 +200,6 @@ public class MainController extends StackPane {
 						throwables.printStackTrace();
 					}
 				});
-				System.out.println("Entered value into DB successfully");
 			}catch (RuntimeException ex){
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setWidth(350);
@@ -211,7 +209,6 @@ public class MainController extends StackPane {
 				alert.setOnCloseRequest(event1 -> {
 					dialog.close();
 				});
-				System.out.println("Couldn't enter value into DB successfully, refer logs..." + ex.getMessage());
 			}
 		});
 		dialog.show();
@@ -307,7 +304,6 @@ public class MainController extends StackPane {
 		dialog.show();
 		rootStack.setMouseTransparent(true);
 		App.DIARY = new Diary(App.DB.executeQuery("SELECT * FROM PAGE ORDER BY CREATION_TIME DESC;"));
-		System.out.println(App.DIARY.toString());
 		pageBox.getChildren().clear();
 		populate();
 		rootStack.setMouseTransparent(false);
@@ -321,6 +317,7 @@ public class MainController extends StackPane {
 	}
 
 	public void initialize(){
+		PageCardController.parent = this;
 		populate();
 	}
 
