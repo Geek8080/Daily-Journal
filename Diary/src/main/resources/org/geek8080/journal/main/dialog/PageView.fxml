@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<fx:root fx:id="rootStack" prefHeight="530.0" prefWidth="600.0" type="StackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="485.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Text fx:id="subtitleText" fill="#57565c" layoutX="17.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subtitle:" wrappingWidth="565.785888671875">
+               <font>
+                  <Font name="SansSerif Italic" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="titleText" fill="#2f5477" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" textAlignment="CENTER" wrappingWidth="600.0">
+               <font>
+                  <Font name="Times New Roman" size="32.0" />
+               </font>
+            </Text>
+            <JFXButton fx:id="okayButton" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="480.0" layoutY="467.0" prefHeight="37.0" prefWidth="88.0" style="-fx-background-color: #6da426;" text="Okay" textFill="#d6edb9">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Text fx:id="timeText" fill="#57565c" layoutX="17.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creation Time" wrappingWidth="428.1859130859375">
+               <font>
+                  <Font name="SansSerif Italic" size="18.0" />
+               </font>
+            </Text>
+            <ScrollPane hbarPolicy="ALWAYS" layoutX="24.0" layoutY="145.0" prefHeight="310.0" prefWidth="558.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../scroll.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="17.600000000000023" AnchorPane.topAnchor="145.0">
+               <content>
+                  <Text fx:id="bodyText" strokeType="OUTSIDE" strokeWidth="0.0" text="Dear Diary" wrappingWidth="546.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>

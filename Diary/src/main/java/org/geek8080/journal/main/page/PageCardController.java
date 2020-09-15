@@ -23,6 +23,7 @@ import javafx.stage.DirectoryChooser;
 import org.geek8080.journal.entities.Page;
 import org.geek8080.journal.main.App;
 import org.geek8080.journal.main.Main;
+import org.geek8080.journal.main.dialog.PageView;
 import org.geek8080.journal.services.ExcelReport;
 import org.geek8080.journal.services.PDFReport;
 
@@ -167,7 +168,12 @@ public class PageCardController extends AnchorPane{
 
 	@FXML
 	void view(MouseEvent event) {
-
+		PageView pageView = new PageView(page);
+		JFXDialog dialog = new JFXDialog(parent, pageView, JFXDialog.DialogTransition.CENTER);
+		dialog.show();
+		pageView.okayButton.setOnMouseClicked(e -> {
+			dialog.close();
+		});
 	}
 
 }

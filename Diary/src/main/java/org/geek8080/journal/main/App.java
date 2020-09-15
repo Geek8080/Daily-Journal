@@ -61,7 +61,7 @@ public class App extends Application {
 		}else{
 			firstUse = true;
 		}
-		HashMap<String, String> tables = new HashMap<>(Map.of("Page", Page.getSQLGenerationQuery()));
+		HashMap<String, String> tables = new HashMap<>(Map.of("PageView", Page.getSQLGenerationQuery()));
 		DB = Database.getInstance("Diary", tables);
 		DIARY = new Diary(DB.executeQuery("SELECT * FROM PAGE ORDER BY CREATION_TIME ASC;"));
 	}
