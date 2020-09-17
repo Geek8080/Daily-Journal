@@ -36,6 +36,9 @@ public class Main {
 		JFXDepthManager.setDepth(mainContainer, 1500);
 
 		stage.setScene(new Scene(decoratorWindow));
+		stage.setOnCloseRequest(e -> {
+			System.exit(0);
+		});
 		stage.show();
 	}
 }
