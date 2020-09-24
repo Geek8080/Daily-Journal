@@ -1,6 +1,6 @@
-## Daily-Journal [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal?ref=badge_shield)
-
+## Daily-Journal 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal?ref=badge_shield) [![CodeFactor](https://www.codefactor.io/repository/github/geek8080/daily-journal/badge)](https://www.codefactor.io/repository/github/geek8080/daily-journal) ![GitHub All Releases](https://img.shields.io/github/downloads/Geek8080/Daily-Journal/total)
+ 
 Designed a simple Application to store diary entries in encrypted form in the H2 database. The application has following features:
 
 - 2147483648 characters in body
