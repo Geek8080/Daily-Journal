@@ -1,4 +1,5 @@
 ## Daily-Journal [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal?ref=badge_shield)
 
 Designed a simple Application to store diary entries in encrypted form in the H2 database. The application has following features:
 
@@ -35,3 +36,6 @@ The app uses Java 11 with openJFX 14 for material design. The app follows the JP
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGeek8080%2FDaily-Journal?ref=badge_large)
