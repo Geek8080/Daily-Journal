@@ -181,7 +181,7 @@ public class MainController extends StackPane {
 				query = "INSERT INTO PAGE(TITLE, BODY) VALUES(?, ?);";
 				values.put(2, body);
 			}else{
-				query = "INSERT INTO PAGE(TITLE, SUBTITLE, BODY) VALUES(?, ?, ?);";;
+				query = "INSERT INTO PAGE(TITLE, SUBTITLE, BODY) VALUES(?, ?, ?);";
 				values.put(2, subTitle);
 				values.put(3, body);
 			}
